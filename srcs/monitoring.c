@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/15 03:28:23 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/08/25 18:21:31 by erbuffet         ###   ########lyon.fr   */
+/*   Created: 2025/07/21 02:02:39 by erbuffet          #+#    #+#             */
+/*   Updated: 2025/08/23 22:28:25 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char **av)
+bool	is_dead(t_philo *philo)
 {
-	t_data	data;
+	struct timeval	current;
+	long long		t2_ms;
+	long long		t1_ms;
 
-	if (!memset(&data, 0, sizeof(t_data)))
-		return (1);
-	if (ac == 5 || ac == 6)
-		init_philo(ac, av, &data);
-	return (0);
+	if (philo->data->n_philo == 1)
+		return (true);
+	gettimeofday(&current, NULL);
+	t1_ms = (current.tv_sec * 1000) + (current.tv_usec / 1000);
+	t2_ms = (philo->last_meal.tv_sec * 1000) + (philo->last_meal.tv_usec
+			/ 1000);
+	if ((t1_ms - t2_ms) >= philo->data->t_die)
+		return (true);
+	else
+		return (false);
 }

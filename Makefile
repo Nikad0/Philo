@@ -9,15 +9,23 @@ NAME = philo
 #######################################
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g3 
 MAKEFLAGS += --no-print-directory
+SANITIZE = -fsanitize=thread -pthread
 VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes
+HELGRIND = valgrind --tool=helgrind --trace-children=yes --track-fds=yes
 
 #######################################
 ######### FILES / HEADERS #############
 #######################################
 
-SOURCES = 	srcs/main.c                \
+SOURCES = 	srcs/main.c     		  \
+			srcs/utils.c	          \
+			srcs/inits.c              \
+			srcs/routine.c            \
+			srcs/monitoring.c         \
+			srcs/mutex_utils.c        \
+			srcs/exit_philo.c         \
 
 #######################################
 #########      BUILD     ##############
@@ -35,7 +43,7 @@ DEPS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.d,$(SRCS))
 #########      RULES     ##############
 #######################################
 
-all: $(LIBFT) $(NAME)
+all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) $(INCS) $(LIBFT) -o $@
@@ -55,7 +63,7 @@ $(BUILD_DIR):
 
 clean:
 	@$(RM) -rf $(BUILD_DIR)
-	@$(MAKE) -s -C libft fclean
+	@#$(MAKE) -s -C libft fclean
 	@echo " Object files cleaned"
 	@echo " Object files removed"
 	@echo "\n\t ✅ clean successfull ! ✅\n"
@@ -76,8 +84,20 @@ re:
 #######################################
 
 valgrind: $(NAME)
-	@echo "\n\t ⚠️  runing program !  ⚠️  \n"
-	$(VALGRIND) ./$(NAME)
+	@echo "\n\t ⚠️  runing valgrind program !  ⚠️  \n"
+	@read -p "Enter args: " args; \
+	$(VALGRIND) ./$(NAME) $$args
+
+helgrind: $(NAME)
+	@echo "\n\t ⚠️  runing valgrind program !  ⚠️  \n"
+	@read -p "Enter args: " args; \
+	$(HELGRIND) ./$(NAME) $$args
+
+sanitize: fclean
+	@$(CC) $(CFLAGS) $(SANITIZE_FLAGS) $(SOURCES) $(INCS) -o $(NAME)
+	@echo "\n\t ⚠️  runing sanitize program !  ⚠️  \n"
+	@read -p "Enter args: " args; \
+	./$(NAME) $$args
 
 #######################################
 #########      HELP      ##############
@@ -89,7 +109,9 @@ help:
 	@echo "\t clean    - Remove object files"
 	@echo "\t fclean   - Remove object files and executable"  
 	@echo "\t re       - Clean and rebuild"
-	@echo "\t valgrind - Run with valgrind"
+	@echo "\t valgrind - Run with : valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes"
+	@echo "\t helgrind - run with : valgrind --tool=helgrind --trace-children=yes --track-fds=yes"
+	@echo "\t sanitize - run with : -g3 -fsanitize=thread -pthread"
 	@echo "\t help     - Show this help\n"
 
-.PHONY: all clean fclean re FORCE libft run valgrind help
+.PHONY: all clean fclean re FORCE libft run valgrind sanitize help
