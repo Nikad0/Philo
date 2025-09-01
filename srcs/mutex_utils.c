@@ -6,29 +6,11 @@
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:37:53 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/08/25 18:38:45 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/08/27 00:12:02 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	take_fork(t_philo *philo, int fork_id)
-{
-	int	elapsed_time;
-
-	pthread_mutex_lock(&philo->fork_mutex[fork_id]);
-	while (philo->fork_bool[fork_id] == false)
-		sleep_ms(philo, philo->data->t_eat);
-	philo->fork_bool[fork_id] = false;
-	elapsed_time = elapsed_time_ms(philo->start_time);
-	print_philo_routine(philo->id, "has taken a fork\n", philo->data);
-}
-
-void	put_fork(t_philo *philo, int fork_id)
-{
-	philo->fork_bool[fork_id] = true;
-	pthread_mutex_unlock(&philo->fork_mutex[fork_id]);
-}
 
 long long	elapsed_time_ms(struct timeval start)
 {
@@ -50,7 +32,7 @@ void	sleep_ms(t_philo *philo, int time)
 
 	start = elapsed_time_ms(philo->start_time);
 	target = start + time;
-	while (elapsed_time_ms(philo->start_time) < target)
+	while (elapsed_time_ms(philo->start_time) <= target)
 	{
 		if (is_dead(philo) && !philo->data->death_flag)
 		{

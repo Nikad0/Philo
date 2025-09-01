@@ -13,7 +13,7 @@ CFLAGS = -Wall -Wextra -Werror -g3
 MAKEFLAGS += --no-print-directory
 SANITIZE = -fsanitize=thread -pthread
 VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes
-HELGRIND = valgrind --tool=helgrind --trace-children=yes --track-fds=yes
+HELGRIND = valgrind --tool=helgrind
 
 #######################################
 ######### FILES / HEADERS #############
@@ -26,6 +26,7 @@ SOURCES = 	srcs/main.c     		  \
 			srcs/monitoring.c         \
 			srcs/mutex_utils.c        \
 			srcs/exit_philo.c         \
+			srcs/fork.c               \
 
 #######################################
 #########      BUILD     ##############

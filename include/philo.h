@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:07:58 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/08/25 18:21:35 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/01 09:14:44 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ struct					s_data
 /*#########      MAIN.C     ###########*/
 /*#####################################*/
 int						main(int ac, char **av);
+
 /*#####################################*/
 /*#########      INITS.C     ##########*/
 /*#####################################*/
@@ -91,18 +92,22 @@ void					clean(t_data *data, int index);
 /*#####################################*/
 /*#########      UTILS.C     ##########*/
 /*#####################################*/
-
 int						ft_atoi(const char *nptr);
 bool					is_number(const char *str);
 
 /*#####################################*/
 /*#########  MUTEX_UTILS.C   ##########*/
 /*#####################################*/
-void					take_fork(t_philo *philo, int fork_id);
-void					put_fork(t_philo *philo, int fork_id);
 void					sleep_ms(t_philo *philo, int time);
 long long				elapsed_time_ms(struct timeval start);
 void					print_philo_routine(int philo_id, char *routine,
 							t_data *data);
+
+/*#####################################*/
+/*#########     FORK.C       ##########*/
+/*#####################################*/
+void					take_fork(t_philo *philo, int left, int right);
+void					put_fork(t_philo *philo, int left, int right);
+void					attribute_fork(t_philo *philo);
 
 #endif
