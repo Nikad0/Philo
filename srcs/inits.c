@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:35:13 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/08/24 00:05:48 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/01 13:53:54 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,21 @@ int	init_mutex(t_data *data)
 int	init_thread_2(t_data *data)
 {
 	int	i;
-	int	j;
 
 	i = -1;
-	j = 1;
 	while (++i < data->n_philo)
 	{
-		data->philo[i].id = j;
+		data->philo[i].id = i + 1;
 		data->philo[i].e_count = 0;
 		data->philo[i].data = data;
 		gettimeofday(&data->philo[i].start_time, NULL);
 		gettimeofday(&data->philo[i].last_meal, NULL);
 		if (pthread_create(&data->thread[i], NULL, start_routine,
 				&data->philo[i]))
+		{
+			return (0);
 			clean(data, i);
-		j++;
+		}
 	}
 	return (1);
 }

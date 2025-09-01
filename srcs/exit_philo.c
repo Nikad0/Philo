@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 13:10:29 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/08/23 23:05:14 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/01 13:54:06 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,8 @@ void	clean(t_data *data, int index)
 		return ;
 	i = -1;
 	if (data->thread)
-	{
 		while (++i < index)
 			pthread_join(data->thread[i], NULL);
-	}
 	destroy(data);
 	clean_philo(data->philo);
 	if (data->thread)
