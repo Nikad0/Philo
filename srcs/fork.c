@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 00:09:04 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/01 15:05:43 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/01 15:32:05 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	take_fork(t_philo *philo, int left, int right)
 
 void	put_fork(t_philo *philo, int left, int right)
 {
-	pthread_mutex_unlock(&philo->fork_mutex[left]);
 	philo->fork_bool[left] = true;
-	pthread_mutex_unlock(&philo->fork_mutex[right]);
 	philo->fork_bool[right] = true;
+	pthread_mutex_unlock(&philo->fork_mutex[left]);
+	pthread_mutex_unlock(&philo->fork_mutex[right]);
 }

@@ -6,11 +6,21 @@
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 02:02:39 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/08/23 22:28:25 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/01 15:37:53 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+bool	check_death_flag(t_philo *philo)
+{
+	bool	is_dead_flag;
+
+	pthread_mutex_lock(&philo->data->death_mutex);
+	is_dead_flag = philo->data->death_flag;
+	pthread_mutex_unlock(&philo->data->death_mutex);
+	return (is_dead_flag);
+}
 
 bool	is_dead(t_philo *philo)
 {

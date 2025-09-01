@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:37:53 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/01 10:50:18 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/01 15:39:15 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	sleep_ms(t_philo *philo, int time)
 	target = start + time;
 	while (elapsed_time_ms(philo->start_time) <= target)
 	{
-		if (is_dead(philo) && !philo->data->death_flag)
+		if (is_dead(philo) && !check_death_flag(philo))
 		{
 			pthread_mutex_lock(&philo->data->death_mutex);
 			philo->data->death_flag = true;
@@ -45,7 +45,7 @@ void	sleep_ms(t_philo *philo, int time)
 			pthread_mutex_unlock(&philo->data->print_mutex);
 			return ;
 		}
-		if (philo->data->death_flag)
+		if (check_death_flag(philo))
 			return ;
 		usleep(500);
 	}

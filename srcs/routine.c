@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 02:02:39 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/01 15:01:23 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/01 15:38:47 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ void	*start_routine(void *arg)
 		one_philo_check(philo);
 	if (philo->id % 2 == 0)
 		sleep_ms(philo, philo->data->t_sleep);
-	while (philo->e_count != philo->data->n_eat && !philo->data->death_flag)
+	while (philo->e_count != philo->data->n_eat && !check_death_flag(philo))
 	{
-		if (!philo->data->death_flag)
+		if (!check_death_flag(philo))
 			attribute_fork(philo);
-		if (!philo->data->death_flag)
+		if (!check_death_flag(philo))
 			sleep_routine(philo);
-		if (!philo->data->death_flag)
+		if (!check_death_flag(philo))
 			think_routine(philo);
 		else
 			break ;
