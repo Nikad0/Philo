@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:07:58 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/01 15:37:43 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/02 14:58:26 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void					*start_routine(void *arg);
 /*#####################################*/
 bool					check_death_flag(t_philo *philo);
 bool					is_dead(t_philo *philo);
+bool					check_fork_flag(t_philo *philo, int index);
 
 /*#####################################*/
 /*#########      EXIT_PHILO.C  ########*/
