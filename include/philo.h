@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:07:58 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/02 14:58:26 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 20:39:51 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ struct					s_philo
 	int					id;
 	int					e_count;
 
+	bool				fork_flag;
+
 	struct timeval		start_time;
 	struct timeval		last_meal;
 
-	bool				*fork_bool;
-
-	pthread_mutex_t		*fork_mutex;
-	pthread_mutex_t		*e_mutex;
+	pthread_mutex_t		e_mutex;
+	pthread_mutex_t		fork_mutex;
 
 	t_data				*data;
 };
@@ -69,7 +69,8 @@ int						main(int ac, char **av);
 /*#####################################*/
 int						init_mutex(t_data *data);
 int						init_thread(t_data *data);
-int						init_philo(int ac, char **av, t_data *data);
+int						init_philo(t_data *data);
+int						init(int ac, char **av, t_data *data);
 
 /*#####################################*/
 /*#########      ROUTINE.C     ########*/
@@ -84,7 +85,7 @@ void					*start_routine(void *arg);
 /*#####################################*/
 bool					check_death_flag(t_philo *philo);
 bool					is_dead(t_philo *philo);
-bool					check_fork_flag(t_philo *philo, int index);
+bool					check_fork_flag(t_philo *philo, int left, int right);
 
 /*#####################################*/
 /*#########      EXIT_PHILO.C  ########*/
@@ -108,7 +109,6 @@ void					print_philo_routine(int philo_id, char *routine,
 /*#####################################*/
 /*#########     FORK.C       ##########*/
 /*#####################################*/
-void					take_fork(t_philo *philo, int left, int right);
 void					put_fork(t_philo *philo, int left, int right);
 void					attribute_fork(t_philo *philo);
 

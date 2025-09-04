@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 02:02:39 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/02 15:19:16 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 20:49:51 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	think_routine(t_philo *philo)
 	if (philo->e_count == philo->data->n_eat)
 		return ;
 	print_philo_routine(philo->id, "is thinking\n", philo->data);
-	sleep_ms(philo, 10);
+	sleep_ms(philo, 5);
 }
 
 void	sleep_routine(t_philo *philo)
@@ -40,9 +40,9 @@ void	eat_routine(t_philo *philo)
 	sleep_ms(philo, philo->data->t_eat);
 	elapsed_time = elapsed_time_ms(philo->start_time);
 	gettimeofday(&philo->last_meal, NULL);
-	pthread_mutex_lock(philo->e_mutex);
+	pthread_mutex_lock(&philo->e_mutex);
 	philo->e_count += 1;
-	pthread_mutex_unlock(philo->e_mutex);
+	pthread_mutex_unlock(&philo->e_mutex);
 }
 
 void	*start_routine(void *arg)
@@ -53,7 +53,7 @@ void	*start_routine(void *arg)
 	print_philo_routine(philo->id, "is thinking\n", philo->data);
 	if (philo->data->n_philo == 1)
 		one_philo_check(philo);
-	if (philo->id % 2 == 0)
+	if (philo->id % 2 != 0)
 		sleep_ms(philo, philo->data->t_sleep);
 	while (philo->e_count != philo->data->n_eat)
 	{

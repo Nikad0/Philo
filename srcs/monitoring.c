@@ -6,20 +6,14 @@
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 02:02:39 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/02 14:03:25 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 21:33:28 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	check_fork_flag(t_philo *philo, int index)
+bool	check_fork_flag(t_philo *philo, int left, int right)
 {
-	bool	fork_flag;
-
-	pthread_mutex_lock(&philo->fork_mutex[index]);
-	fork_flag = philo->fork_bool[index];
-	pthread_mutex_unlock(&philo->fork_mutex[index]);
-	return (fork_flag);
 }
 
 bool	check_death_flag(t_philo *philo)
