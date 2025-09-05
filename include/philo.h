@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nikado <nikado@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:07:58 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/04 20:39:51 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/05 11:15:32 by nikado           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,35 @@
 
 typedef struct s_philo	t_philo;
 typedef struct s_data	t_data;
+typedef struct s_fork	t_fork;
+
 
 struct					s_philo
 {
 	int					id;
 	int					e_count;
 
-	bool				fork_flag;
-
 	struct timeval		start_time;
 	struct timeval		last_meal;
 
+	t_fork          *left_fork;
+    t_fork          *right_fork;
+
 	pthread_mutex_t		e_mutex;
-	pthread_mutex_t		fork_mutex;
 
 	t_data				*data;
+	t_fork				*fork;
+
+};
+
+struct s_fork
+{
+	bool				flag;
+	pthread_mutex_t		mutex;
+	
+	t_data				*data;
+	t_philo				*philo;
+
 };
 
 struct					s_data
@@ -57,6 +71,7 @@ struct					s_data
 	pthread_mutex_t		death_mutex;
 
 	t_philo				*philo;
+	t_fork				*fork;
 };
 
 /*#####################################*/
@@ -109,7 +124,8 @@ void					print_philo_routine(int philo_id, char *routine,
 /*#####################################*/
 /*#########     FORK.C       ##########*/
 /*#####################################*/
-void					put_fork(t_philo *philo, int left, int right);
-void					attribute_fork(t_philo *philo);
+void	attribute_fork(t_data *data);
+int take_fork(t_fork *fork);
+void put_fork(t_fork *fork);
 
 #endif

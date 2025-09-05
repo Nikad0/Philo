@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nikado <nikado@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 02:02:39 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/04 21:33:28 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/05 11:08:50 by nikado           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-bool	check_fork_flag(t_philo *philo, int left, int right)
-{
-}
 
 bool	check_death_flag(t_philo *philo)
 {

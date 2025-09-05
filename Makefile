@@ -47,7 +47,7 @@ DEPS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.d,$(SRCS))
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS) $(INCS) $(LIBFT) -o $@
+	@$(CC) $(CFLAGS) -pthread $(OBJS) $(INCS) $(LIBFT) -o $@
 	@echo "\n✅ $(NAME) compiled successfully!✅"
 
 $(BUILD_DIR)%.o: $(SRC_DIR)%.c Makefile include/philo.h | $(BUILD_DIR)
@@ -87,15 +87,15 @@ re:
 valgrind: $(NAME)
 	@echo "\n\t ⚠️  runing valgrind program !  ⚠️  \n"
 	@read -p "Enter args: " args; \
-	$(VALGRIND) ./$(NAME) $$args
+	$(VALGRIND) ./$(NAME) -pthread $$args
 
 helgrind: $(NAME)
 	@echo "\n\t ⚠️  runing valgrind program !  ⚠️  \n"
 	@read -p "Enter args: " args; \
-	$(HELGRIND) ./$(NAME) $$args
+	$(HELGRIND) ./$(NAME) -pthread $$args
 
 sanitize: fclean
-	@$(CC) $(CFLAGS) $(SANITIZE_FLAGS) $(SOURCES) $(INCS) -o $(NAME)
+	@$(CC) $(CFLAGS) -pthread $(SANITIZE_FLAGS) $(SOURCES) $(INCS) -o $(NAME)
 	@echo "\n\t ⚠️  runing sanitize program !  ⚠️  \n"
 	@read -p "Enter args: " args; \
 	./$(NAME) $$args

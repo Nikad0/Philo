@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: nikado <nikado@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:35:13 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/04 20:48:45 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/05 11:13:47 by nikado           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,17 @@ int	init_philo(t_data *data)
 		data->philo[i].id = i + 1;
 		data->philo[i].e_count = 0;
 		data->philo[i].data = data;
-		data->philo[i].fork_flag = true;
+		data->fork[i].flag = true;
 		gettimeofday(&data->philo[i].start_time, NULL);
 		gettimeofday(&data->philo[i].last_meal, NULL);
+		data->philo[i].left_fork  = &data->fork[i];
+        data->philo[i].right_fork = &data->fork[(i + 1) % data->n_philo];
 		if (pthread_mutex_init(&data->philo[i].e_mutex, NULL))
 			return (0);
-		if (pthread_mutex_init(&data->philo[i].fork_mutex, NULL))
+		if (pthread_mutex_init(&data->fork[i].mutex, NULL))
 			return (0);
 	}
+	attribute_fork(data);
 	return (1);
 }
 
@@ -63,16 +66,25 @@ int	init_thread(t_data *data)
 	data->philo = malloc(sizeof(t_philo) * data->n_philo);
 	if (!data->philo)
 		return (0);
-	data->thread = malloc(sizeof(pthread_t) * data->n_philo);
-	if (!data->thread)
+	data->fork = malloc(sizeof(t_fork) * data->n_philo);
+	if (!data->fork)
 	{
 		free(data->philo);
 		return (0);
 	}
+	data->thread = malloc(sizeof(pthread_t) * data->n_philo);
+	if (!data->thread)
+	{
+		free(data->philo);
+		free(data->fork);
+		return (0);
+	}
+
 	if (!init_mutex(data) || !init_philo(data) || !init_thread_2(data))
 	{
 		free(data->philo);
 		free(data->thread);
+		free(data->fork);
 		return (0);
 	}
 	return (1);
@@ -84,10 +96,8 @@ int	init(int ac, char **av, t_data *data)
 
 	i = 0;
 	while (++i < ac)
-	{
 		if (!is_number(av[i]))
 			return (0);
-	}
 	data->n_philo = ft_atoi(av[1]);
 	data->t_die = ft_atoi(av[2]);
 	data->t_eat = ft_atoi(av[3]);
