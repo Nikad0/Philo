@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nikado <nikado@student.42.fr>              +#+  +:+       +#+        */
+/*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 13:10:29 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/05 11:23:54 by nikado           ###   ########.fr       */
+/*   Updated: 2025/09/06 13:17:20 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	destroy(t_data *data)
 {
-	int i = -1;
+	int	i;
+
+	i = -1;
 	if (!data || !data->philo)
 		return ;
 	pthread_mutex_destroy(&data->death_mutex);
@@ -39,6 +41,6 @@ void	clean(t_data *data, int index)
 		free(data->thread);
 	if (data->philo)
 		free(data->philo);
-	if (data->fork)			
+	if (data->fork)
 		free(data->fork);
 }

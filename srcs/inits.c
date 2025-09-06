@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nikado <nikado@student.42.fr>              +#+  +:+       +#+        */
+/*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:35:13 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/05 11:13:47 by nikado           ###   ########.fr       */
+/*   Updated: 2025/09/06 13:28:50 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ int	init_philo(t_data *data)
 		data->fork[i].flag = true;
 		gettimeofday(&data->philo[i].start_time, NULL);
 		gettimeofday(&data->philo[i].last_meal, NULL);
-		data->philo[i].left_fork  = &data->fork[i];
-        data->philo[i].right_fork = &data->fork[(i + 1) % data->n_philo];
+		data->philo[i].left_fork = &data->fork[i];
+		data->philo[i].right_fork = &data->fork[(i + 1) % data->n_philo];
 		if (pthread_mutex_init(&data->philo[i].e_mutex, NULL))
 			return (0);
 		if (pthread_mutex_init(&data->fork[i].mutex, NULL))
 			return (0);
 	}
-	attribute_fork(data);
+	attribute_fork(philo->data);
 	return (1);
 }
 
@@ -79,7 +79,6 @@ int	init_thread(t_data *data)
 		free(data->fork);
 		return (0);
 	}
-
 	if (!init_mutex(data) || !init_philo(data) || !init_thread_2(data))
 	{
 		free(data->philo);
