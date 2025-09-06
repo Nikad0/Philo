@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:35:13 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/06 13:28:50 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/06 14:23:37 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	init_philo(t_data *data)
 		if (pthread_mutex_init(&data->fork[i].mutex, NULL))
 			return (0);
 	}
-	attribute_fork(philo->data);
+	attribute_fork(data);
 	return (1);
 }
 
