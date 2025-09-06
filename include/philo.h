@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:07:58 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/06 13:28:07 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/06 13:42:00 by erbuffet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,3 +127,4 @@ int						take_fork(t_fork *fork);
 void					put_fork(t_fork *fork);
 
 #endif
+// oui oui
