@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erbuffet <erbuffet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: erbuffet <erbuffet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 03:28:23 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/09/06 13:17:24 by erbuffet         ###   ########lyon.fr   */
+/*   Updated: 2025/09/27 17:15:33 by erbuffet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,14 @@ int	main(int ac, char **av)
 	if (!memset(&data, 0, sizeof(t_data)))
 		return (1);
 	if (ac == 5 || ac == 6)
+	{
 		if (init(ac, av, &data))
+		{
+			printf("error\n");
 			return (1);
-	return (0);
+		}
+		return (0);
+	}
+	printf("error\n");
+	return (1);
 }

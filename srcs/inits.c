@@ -38,10 +38,13 @@ int	init_philo(t_data *data)
 
 int	init_mutex(t_data *data)
 {
-	pthread_mutex_init(&data->print_mutex, NULL);
-	pthread_mutex_init(&data->meal_mutex, NULL);
-	pthread_mutex_init(&data->death_mutex, NULL);
-	return (1);
+	if (!pthread_mutex_init(&data->print_mutex, NULL))
+		return (1);
+	if (!pthread_mutex_init(&data->meal_mutex, NULL))
+		return (1);
+	if (!pthread_mutex_init(&data->death_mutex, NULL))
+		return (1);
+	return (0);
 }
 
 int	init_thread_2(t_data *data)
@@ -65,28 +68,28 @@ int	init_thread(t_data *data)
 {
 	data->philo = malloc(sizeof(t_philo) * data->n_philo);
 	if (!data->philo)
-		return (0);
+		return (1);
 	data->fork = malloc(sizeof(t_fork) * data->n_philo);
 	if (!data->fork)
 	{
 		free(data->philo);
-		return (0);
+		return (1);
 	}
 	data->thread = malloc(sizeof(pthread_t) * data->n_philo);
 	if (!data->thread)
 	{
 		free(data->philo);
 		free(data->fork);
-		return (0);
+		return (1);
 	}
 	if (!init_mutex(data) || !init_philo(data) || !init_thread_2(data))
 	{
 		free(data->philo);
 		free(data->thread);
 		free(data->fork);
-		return (0);
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int	init(int ac, char **av, t_data *data)
@@ -95,8 +98,8 @@ int	init(int ac, char **av, t_data *data)
 
 	i = 0;
 	while (++i < ac)
-		if (!is_number(av[i]))
-			return (0);
+		if (!is_number(av[i]) || ft_atoi(av[i]) > __INT_MAX__)
+			return (1);
 	data->n_philo = ft_atoi(av[1]);
 	data->t_die = ft_atoi(av[2]);
 	data->t_eat = ft_atoi(av[3]);
@@ -105,11 +108,13 @@ int	init(int ac, char **av, t_data *data)
 	data->death_flag = false;
 	if (ac == 6)
 		data->n_eat = ft_atoi(av[5]);
-	if (init_thread(data) || data->n_philo <= 0 || data->t_die <= 0
-		|| data->t_eat <= 0 || data->t_sleep <= 0)
+	if (data->n_philo <= 0 || data->t_die <= 0
+		|| data->t_eat <= 0 || data->t_sleep <= 0 || data->n_eat == 0)
+		return (1);
+	if (!init_thread(data))
 	{
 		clean(data, data->n_philo);
-		return (0);
+		return (1);
 	}
-	return (1);
+	return (0);
 }

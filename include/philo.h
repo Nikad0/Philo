@@ -98,7 +98,6 @@ void					*start_routine(void *arg);
 /*#####################################*/
 bool					check_death_flag(t_philo *philo);
 bool					is_dead(t_philo *philo);
-bool					check_fork_flag(t_philo *philo, int left, int right);
 
 /*#####################################*/
 /*#########      EXIT_PHILO.C  ########*/
@@ -108,7 +107,7 @@ void					clean(t_data *data, int index);
 /*#####################################*/
 /*#########      UTILS.C     ##########*/
 /*#####################################*/
-int						ft_atoi(const char *nptr);
+long long				ft_atoi(const char *nptr);
 bool					is_number(const char *str);
 
 /*#####################################*/

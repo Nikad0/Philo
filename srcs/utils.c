@@ -28,11 +28,11 @@ bool	is_number(const char *str)
 	return (true);
 }
 
-int	ft_atoi(const char *nptr)
+long long	ft_atoi(const char *nptr)
 {
-	int	i;
-	int	nb;
-	int	signe;
+	long long	nb;
+	int			i;
+	int			signe;
 
 	i = 0;
 	nb = 0;

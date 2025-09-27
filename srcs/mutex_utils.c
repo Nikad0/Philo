@@ -36,18 +36,18 @@ void	sleep_ms(t_philo *philo, int time)
 	{
 		if (is_dead(philo) && !check_death_flag(philo))
 		{
+			pthread_mutex_lock(&philo->data->print_mutex);
 			pthread_mutex_lock(&philo->data->death_mutex);
 			philo->data->death_flag = true;
-			pthread_mutex_unlock(&philo->data->death_mutex);
-			pthread_mutex_lock(&philo->data->print_mutex);
 			elapsed_time = elapsed_time_ms(philo->start_time);
 			printf("%d %d died\n", elapsed_time, philo->id);
 			pthread_mutex_unlock(&philo->data->print_mutex);
+			pthread_mutex_unlock(&philo->data->death_mutex);
 			return ;
 		}
 		if (check_death_flag(philo))
 			return ;
-		usleep(500);
+		usleep(1000);
 	}
 }
 
