@@ -8,7 +8,7 @@ NAME = philo
 ######### FLAGS & COMPIL ##############
 #######################################
 
-CC = cc
+CC = cc 
 CFLAGS = -Wall -Wextra -Werror -g3 
 MAKEFLAGS += --no-print-directory
 SANITIZE = -fsanitize=thread -pthread
@@ -46,8 +46,8 @@ DEPS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.d,$(SRCS))
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) -pthread $(OBJS) $(INCS) $(LIBFT) -o $@
+$(NAME): $(OBJS) 
+	@$(CC) $(CFLAGS) -pthread $(OBJS) $(INCS) -o $@
 	@echo "\n✅ $(NAME) compiled successfully!✅"
 
 $(BUILD_DIR)%.o: $(SRC_DIR)%.c Makefile include/philo.h | $(BUILD_DIR)

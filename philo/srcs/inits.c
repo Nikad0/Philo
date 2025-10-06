@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 00:35:13 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/10/06 00:58:37 by erbuffet         ###   ########.fr       */
+/*   Updated: 2025/10/06 21:18:12 by erbuffet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static int	init_thread_bis(t_data *data)
 	if (pthread_mutex_init(&data->death_mutex, NULL))
 		return (0);
 	if (pthread_mutex_init(&data->finish_mutex, NULL))
+		return (0);
+	if (pthread_mutex_init(&data->meal_mutex, NULL))
 		return (0);
 	while (++i < data->n_philo)
 	{

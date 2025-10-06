@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 13:10:29 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/10/01 01:14:15 by erbuffet         ###   ########.fr       */
+/*   Updated: 2025/10/06 19:44:12 by erbuffet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	destroy(t_data *data)
 	if (!data || !data->philo)
 		return ;
 	pthread_mutex_destroy(&data->death_mutex);
+	pthread_mutex_destroy(&data->finish_mutex);
 	pthread_mutex_destroy(&data->print_mutex);
+	pthread_mutex_destroy(&data->meal_mutex);
 	while (++i < data->n_philo)
 	{
 		pthread_mutex_destroy(&data->philo[i].e_mutex);

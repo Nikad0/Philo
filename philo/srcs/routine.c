@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 02:02:39 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/10/06 02:16:50 by erbuffet         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:20:13 by erbuffet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,15 @@ void	eat_routine(t_philo *philo)
 {
 	if (check_death_flag(philo))
 		return ;
-	while (1)
+	if (two_fork_taken(philo, philo->left_fork, philo->right_fork))
 	{
-		if (take_fork(philo->left_fork))
-		{
-			print_philo_routine(philo->id, "has taken a fork\n", philo->data);
-			while (1)
-			{
-				if (take_fork(philo->right_fork))
-				{
-					print_philo_routine(philo->id,
-						"has taken a fork\n", philo->data);
-					philo_eat_count(philo);
-					sleep_ms(philo, philo->data->t_eat);
-					gettimeofday(&philo->last_meal, NULL);
-					put_fork(philo->right_fork);
-					put_fork(philo->left_fork);
-					increment_finish(philo);
-					return ;
-				}
-			}
-		}
-		sleep_ms(philo, 0);
+		philo_eat_count(philo);
+		sleep_ms(philo, philo->data->t_eat);
+		gettimeofday(&philo->last_meal, NULL);
+		put_fork(philo->right_fork);
+		put_fork(philo->left_fork);
+		increment_finish(philo);
+		return ;
 	}
 }
 

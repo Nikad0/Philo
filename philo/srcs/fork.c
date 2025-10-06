@@ -6,15 +6,37 @@
 /*   By: erbuffet <erbuffet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 00:09:04 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/10/06 01:26:29 by erbuffet         ###   ########.fr       */
+/*   Updated: 2025/10/06 21:17:32 by erbuffet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	take_fork(t_fork *fork)
+int	two_fork_taken(t_philo *philo, t_fork *left_fork, t_fork *right_fork)
 {
-	int	success;
+	while (1)
+	{
+		if (take_fork(left_fork))
+		{
+			print_philo_routine(philo->id, "has taken a fork\n", philo->data);
+			while (1)
+			{
+				if (take_fork(right_fork))
+				{
+					print_philo_routine(philo->id,
+						"has taken a fork\n", philo->data);
+					return (1);
+				}
+			}
+		}
+		usleep(100);
+	}
+	return (0);
+}
+
+bool	take_fork(t_fork *fork)
+{
+	bool	success;
 
 	success = 0;
 	pthread_mutex_lock(&fork->mutex);

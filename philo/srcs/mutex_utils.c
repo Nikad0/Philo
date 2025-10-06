@@ -6,11 +6,19 @@
 /*   By: erbuffet <erbuffet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:37:53 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/10/05 23:59:22 by erbuffet         ###   ########.fr       */
+/*   Updated: 2025/10/06 21:11:32 by erbuffet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	philo_eat_count(t_philo *philo)
+{
+	print_philo_routine(philo->id, "is eating\n", philo->data);
+	pthread_mutex_lock(&philo->e_mutex);
+	philo->e_count++;
+	pthread_mutex_unlock(&philo->e_mutex);
+}
 
 void	increment_finish(t_philo *philo)
 {
@@ -46,13 +54,13 @@ void	sleep_ms(t_philo *philo, int time)
 	{
 		if (is_dead(philo) && !check_death_flag(philo))
 		{
-			pthread_mutex_lock(&philo->data->print_mutex);
+			elapsed_time = elapsed_time_ms(philo->start_time);
 			pthread_mutex_lock(&philo->data->death_mutex);
 			philo->data->death_flag = true;
-			elapsed_time = elapsed_time_ms(philo->start_time);
+			pthread_mutex_unlock(&philo->data->death_mutex);
+			pthread_mutex_lock(&philo->data->print_mutex);
 			printf("%d %d died\n", elapsed_time, philo->id);
 			pthread_mutex_unlock(&philo->data->print_mutex);
-			pthread_mutex_unlock(&philo->data->death_mutex);
 			return ;
 		}
 		if (check_death_flag(philo))
@@ -65,11 +73,11 @@ void	print_philo_routine(int philo_id, char *routine, t_data *data)
 {
 	long long	elapsed_time;
 
-	pthread_mutex_lock(&data->print_mutex);
-	pthread_mutex_lock(&data->death_mutex);
 	elapsed_time = elapsed_time_ms(data->philo->start_time);
-	if (!data->death_flag)
+	if (!check_death_flag(data->philo))
+	{
+		pthread_mutex_lock(&data->print_mutex);
 		printf("%lld %d %s", elapsed_time, philo_id, routine);
-	pthread_mutex_unlock(&data->death_mutex);
-	pthread_mutex_unlock(&data->print_mutex);
+		pthread_mutex_unlock(&data->print_mutex);
+	}
 }

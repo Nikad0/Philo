@@ -6,30 +6,22 @@
 /*   By: erbuffet <erbuffet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 02:02:39 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/10/06 02:16:04 by erbuffet         ###   ########.fr       */
+/*   Updated: 2025/10/06 19:09:59 by erbuffet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo_eat_count(t_philo *philo)
+bool	meal_monitoring(t_philo *philo)
 {
-	print_philo_routine(philo->id, "is eating\n", philo->data);
-	pthread_mutex_lock(&philo->e_mutex);
-	philo->e_count++;
-	pthread_mutex_unlock(&philo->e_mutex);
-}
+	bool	finish_flag;
 
-int	meal_monitoring(t_philo *philo)
-{
+	finish_flag = false;
 	pthread_mutex_lock(&philo->data->finish_mutex);
 	if (philo->data->finish == philo->data->n_philo)
-	{
-		pthread_mutex_unlock(&philo->data->finish_mutex);
-		return (1);
-	}
+		finish_flag = true;
 	pthread_mutex_unlock(&philo->data->finish_mutex);
-	return (0);
+	return (finish_flag);
 }
 
 bool	check_death_flag(t_philo *philo)
@@ -52,8 +44,10 @@ bool	is_dead(t_philo *philo)
 		return (true);
 	gettimeofday(&current, NULL);
 	t1_ms = (current.tv_sec * 1000) + (current.tv_usec / 1000);
+	pthread_mutex_lock(&philo->data->meal_mutex);
 	t2_ms = (philo->last_meal.tv_sec * 1000) + (philo->last_meal.tv_usec
 			/ 1000);
+	pthread_mutex_unlock(&philo->data->meal_mutex);
 	if ((t1_ms - t2_ms) >= philo->data->t_die)
 		return (true);
 	else

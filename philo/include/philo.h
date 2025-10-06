@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:07:58 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/10/06 02:06:10 by erbuffet         ###   ########.fr       */
+/*   Updated: 2025/10/06 21:17:11 by erbuffet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ struct					s_philo
 struct					s_fork
 {
 	int					fork_id;
+
 	bool				flag;
+
 	pthread_mutex_t		mutex;
 
 	t_data				*data;
@@ -67,9 +69,9 @@ struct					s_data
 	pthread_t			*thread;
 
 	pthread_mutex_t		print_mutex;
-	pthread_mutex_t		meal_mutex;
 	pthread_mutex_t		death_mutex;
 	pthread_mutex_t		finish_mutex;
+	pthread_mutex_t		meal_mutex;
 
 	t_philo				*philo;
 	t_fork				*fork;
@@ -99,7 +101,7 @@ void					*start_routine(void *arg);
 void					philo_eat_count(t_philo *philo);
 bool					check_death_flag(t_philo *philo);
 bool					is_dead(t_philo *philo);
-int						meal_monitoring(t_philo *philo);
+bool					meal_monitoring(t_philo *philo);
 
 /*#####################################*/
 /*#########      EXIT_PHILO.C  ########*/
@@ -124,8 +126,10 @@ void					print_philo_routine(int philo_id, char *routine,
 /*#####################################*/
 /*#########     FORK.C       ##########*/
 /*#####################################*/
+int						two_fork_taken(t_philo *philo,
+							t_fork *left_fork, t_fork *right_fork);
 void					attribute_fork(t_data *data);
-int						take_fork(t_fork *fork);
+bool					take_fork(t_fork *fork);
 void					put_fork(t_fork *fork);
 
 #endif
