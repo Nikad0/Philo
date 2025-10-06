@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 02:02:39 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/10/06 01:26:01 by erbuffet         ###   ########.fr       */
+/*   Updated: 2025/10/06 02:16:50 by erbuffet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,22 @@ void	eat_routine(t_philo *philo)
 	{
 		if (take_fork(philo->left_fork))
 		{
-			if (take_fork(philo->right_fork))
+			print_philo_routine(philo->id, "has taken a fork\n", philo->data);
+			while (1)
 			{
-				print_philo_routine(philo->id, "is eating\n", philo->data);
-				philo->e_count++;
-				pthread_mutex_unlock(&philo->e_mutex);
-				sleep_ms(philo, philo->data->t_eat);
-				gettimeofday(&philo->last_meal, NULL);
-				put_fork(philo->right_fork);
-				put_fork(philo->left_fork);
-				increment_finish(philo);
-				return ;
+				if (take_fork(philo->right_fork))
+				{
+					print_philo_routine(philo->id,
+						"has taken a fork\n", philo->data);
+					philo_eat_count(philo);
+					sleep_ms(philo, philo->data->t_eat);
+					gettimeofday(&philo->last_meal, NULL);
+					put_fork(philo->right_fork);
+					put_fork(philo->left_fork);
+					increment_finish(philo);
+					return ;
+				}
 			}
-			put_fork(philo->left_fork);
 		}
 		sleep_ms(philo, 0);
 	}

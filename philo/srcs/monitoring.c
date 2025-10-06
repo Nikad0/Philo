@@ -6,15 +6,22 @@
 /*   By: erbuffet <erbuffet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 02:02:39 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/10/06 01:27:14 by erbuffet         ###   ########.fr       */
+/*   Updated: 2025/10/06 02:16:04 by erbuffet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void	philo_eat_count(t_philo *philo)
+{
+	print_philo_routine(philo->id, "is eating\n", philo->data);
+	pthread_mutex_lock(&philo->e_mutex);
+	philo->e_count++;
+	pthread_mutex_unlock(&philo->e_mutex);
+}
+
 int	meal_monitoring(t_philo *philo)
 {
-	if (philo)
 	pthread_mutex_lock(&philo->data->finish_mutex);
 	if (philo->data->finish == philo->data->n_philo)
 	{

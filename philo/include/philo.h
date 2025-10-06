@@ -6,7 +6,7 @@
 /*   By: erbuffet <erbuffet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:07:58 by erbuffet          #+#    #+#             */
-/*   Updated: 2025/10/06 01:26:25 by erbuffet         ###   ########.fr       */
+/*   Updated: 2025/10/06 02:06:10 by erbuffet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void					*start_routine(void *arg);
 /*#####################################*/
 /*#########      MONITORING.C  ########*/
 /*#####################################*/
+void					philo_eat_count(t_philo *philo);
 bool					check_death_flag(t_philo *philo);
 bool					is_dead(t_philo *philo);
 int						meal_monitoring(t_philo *philo);
